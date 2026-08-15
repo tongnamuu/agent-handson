@@ -64,9 +64,17 @@ try {
     messages.push(responseMessage);
 
     const toolCalls = responseMessage.tool_calls ?? [];
+    if (toolCalls.length === 0) {
+      console.log("Tool Calling: 없음");
+    }
+
     for (const toolCall of toolCalls) {
+      console.log(
+        `Tool Calling: ${toolCall.function.name} ${JSON.stringify(toolCall.function.arguments)}`,
+      );
+
       const toolResult = runTool(toolCall);
-      console.log(`Tool: ${toolCall.function.name} -> ${toolResult}`);
+      console.log(`Tool Result: ${toolResult}`);
 
       messages.push({
         role: "tool",
