@@ -10,3 +10,12 @@ npm pkg set type=module
 ```
 npm i -D tsx typescript @types/node
 ```
+
+
+```
+ollama pull qwen2.5
+```
+
+```
+ollama run qwen2.5 "who are you?"
+```
