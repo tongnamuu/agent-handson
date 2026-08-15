@@ -1,0 +1,26 @@
+{
+  "name": "agent-handson",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tongnamuu/agent-handson.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tongnamuu/agent-handson/issues"
+  },
+  "homepage": "https://github.com/tongnamuu/agent-handson#readme",
+  "description": "",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}
