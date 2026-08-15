@@ -7,14 +7,15 @@ export const calculatorTool: ToolSchema = {
   function: {
     name: TOOL_NAME,
     description:
-      "괄호와 덧셈, 뺄셈, 곱셈, 나눗셈으로 구성된 수식을 정확하게 계산합니다.",
+      "괄호와 덧셈, 뺄셈, 곱셈, 나눗셈 수식을 계산할 때 반드시 사용하는 도구입니다.",
     parameters: {
       type: "object",
       required: ["expression"],
       properties: {
         expression: {
           type: "string",
-          description: "계산할 수식입니다. 예: (1+2)*3/2*10",
+          description:
+            "사용자가 입력한 형태를 수정하지 않고 그대로 전달한 계산식입니다. 예: (1+2)*3/2*10",
         },
       },
     },
@@ -155,6 +156,13 @@ export function validateParentheses(expression: string): void {
 
   if (depth > 0) {
     throw new Error("닫는 괄호가 필요합니다.");
+  }
+}
+
+export function validateCalculatorInput(input: string): void {
+  const looksLikeArithmetic = /\d/.test(input) && /[+\-*/]/.test(input);
+  if (looksLikeArithmetic) {
+    validateParentheses(input);
   }
 }
 
