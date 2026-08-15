@@ -1,24 +1,34 @@
 import process from "node:process";
 
-interface OllamaGenerateResponse {
+interface OllamaMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+interface OllamaChatResponse {
   model: string;
-  response: string;
+  message: OllamaMessage;
   done: boolean;
 }
 
 const ollamaHost = process.env.OLLAMA_HOST ?? "http://localhost:11434";
 const model = process.env.OLLAMA_MODEL ?? "qwen2.5";
 const userPrompt = process.argv.slice(2).join(" ") || "Who are you?";
+const userMessage: OllamaMessage = {
+  role: "user",
+  content: userPrompt,
+};
+const messages: OllamaMessage[] = [userMessage];
 
 async function callOllama(): Promise<string> {
-  const response = await fetch(`${ollamaHost}/api/generate`, {
+  const response = await fetch(`${ollamaHost}/api/chat`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       model,
-      prompt: userPrompt,
+      messages,
       stream: false,
     }),
     signal: AbortSignal.timeout(60_000),
@@ -29,8 +39,8 @@ async function callOllama(): Promise<string> {
     throw new Error(`Ollama API error (${response.status}): ${errorBody}`);
   }
 
-  const result = (await response.json()) as OllamaGenerateResponse;
-  return result.response;
+  const result = (await response.json()) as OllamaChatResponse;
+  return result.message.content;
 }
 
 try {
