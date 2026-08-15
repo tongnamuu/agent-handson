@@ -1,6 +1,6 @@
 import process from "node:process";
 
-interface OllamaMessage {
+export interface OllamaMessage {
   role: "system" | "user" | "assistant";
   content: string;
 }
@@ -13,14 +13,10 @@ interface OllamaChatResponse {
 
 const ollamaHost = process.env.OLLAMA_HOST ?? "http://localhost:11434";
 const model = process.env.OLLAMA_MODEL ?? "qwen2.5";
-const userPrompt = process.argv.slice(2).join(" ") || "Who are you?";
-const userMessage: OllamaMessage = {
-  role: "user",
-  content: userPrompt,
-};
-const messages: OllamaMessage[] = [userMessage];
 
-async function callOllama(): Promise<OllamaMessage> {
+export async function chatLLM(
+  messages: OllamaMessage[],
+): Promise<OllamaMessage> {
   const response = await fetch(`${ollamaHost}/api/chat`, {
     method: "POST",
     headers: {
@@ -30,6 +26,9 @@ async function callOllama(): Promise<OllamaMessage> {
       model,
       messages,
       stream: false,
+      options: {
+        temperature: 0,
+      },
     }),
     signal: AbortSignal.timeout(60_000),
   });
@@ -41,13 +40,4 @@ async function callOllama(): Promise<OllamaMessage> {
 
   const result = (await response.json()) as OllamaChatResponse;
   return result.message;
-}
-
-try {
-  const message = await callOllama();
-  console.log(message.content);
-} catch (error) {
-  const message = error instanceof Error ? error.message : String(error);
-  console.error(`Failed to call Ollama: ${message}`);
-  process.exitCode = 1;
 }
