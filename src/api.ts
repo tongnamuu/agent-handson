@@ -20,7 +20,7 @@ const userMessage: OllamaMessage = {
 };
 const messages: OllamaMessage[] = [userMessage];
 
-async function callOllama(): Promise<string> {
+async function callOllama(): Promise<OllamaMessage> {
   const response = await fetch(`${ollamaHost}/api/chat`, {
     method: "POST",
     headers: {
@@ -40,12 +40,12 @@ async function callOllama(): Promise<string> {
   }
 
   const result = (await response.json()) as OllamaChatResponse;
-  return result.message.content;
+  return result.message;
 }
 
 try {
-  const answer = await callOllama();
-  console.log(answer);
+  const message = await callOllama();
+  console.log(message.content);
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
   console.error(`Failed to call Ollama: ${message}`);
