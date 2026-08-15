@@ -1,8 +1,12 @@
 import process from "node:process";
 
+import type { ToolCall, ToolSchema } from "./tools";
+
 export interface OllamaMessage {
-  role: "system" | "user" | "assistant";
+  role: "system" | "user" | "assistant" | "tool";
   content: string;
+  tool_name?: string;
+  tool_calls?: ToolCall[];
 }
 
 interface OllamaChatResponse {
@@ -16,6 +20,7 @@ const model = process.env.OLLAMA_MODEL ?? "qwen2.5";
 
 export async function chatLLM(
   messages: OllamaMessage[],
+  tools: ToolSchema[] = [],
 ): Promise<OllamaMessage> {
   const response = await fetch(`${ollamaHost}/api/chat`, {
     method: "POST",
@@ -25,6 +30,7 @@ export async function chatLLM(
     body: JSON.stringify({
       model,
       messages,
+      tools,
       stream: false,
       options: {
         temperature: 0,
