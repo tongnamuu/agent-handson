@@ -1,0 +1,4 @@
+interface:
+  display_name: "개발 환경 기동"
+  short_description: "Ollama qwen3:8b 개발 환경을 일관되게 준비"
+  default_prompt: "Use $start-dev-env to start and verify this project's Ollama development environment."

@@ -18,8 +18,11 @@
   "homepage": "https://github.com/tongnamuu/agent-handson#readme",
   "description": "",
   "type": "module",
+  "engines": {
+    "node": "22.13.0"
+  },
   "devDependencies": {
-    "@types/node": "^26.2.0",
+    "@types/node": "^22.13.0",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
   }
