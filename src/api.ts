@@ -16,7 +16,7 @@ interface OllamaChatResponse {
 }
 
 const ollamaHost = process.env.OLLAMA_HOST ?? "http://localhost:11434";
-const model = process.env.OLLAMA_MODEL ?? "qwen3:4b";
+const model = process.env.OLLAMA_MODEL ?? "qwen3:8b";
 const isDevelopment = process.env.NODE_ENV !== "production";
 const cyan = "\u001b[36m";
 const reset = "\u001b[0m";
@@ -35,6 +35,7 @@ export async function chatLLM(
       messages,
       tools,
       stream: false,
+      think: false,
       options: {
         temperature: 0,
       },
