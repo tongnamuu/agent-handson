@@ -13,11 +13,11 @@ npm i -D tsx typescript @types/node
 
 
 ```
-ollama pull qwen2.5
+ollama pull qwen3:4b
 ```
 
 ```
-ollama run qwen2.5 "who are you?"
+ollama run qwen3:4b "who are you?"
 ```
 
 ## 대화형 Tool Calling 실행
