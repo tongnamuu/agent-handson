@@ -3,6 +3,10 @@ import {
   executeCalculatorTool,
   validateCalculatorInput,
 } from "./tools/calculator";
+import {
+  currentDateTool,
+  executeCurrentDateTool,
+} from "./tools/current-date";
 
 export type ToolCall = {
     function: {
@@ -31,6 +35,10 @@ const registeredTools: RegisteredTool[] = [
     schema: calculatorTool,
     execute: executeCalculatorTool,
     validateInput: validateCalculatorInput,
+  },
+  {
+    schema: currentDateTool,
+    execute: executeCurrentDateTool,
   },
 ];
 
